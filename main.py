@@ -21,7 +21,6 @@ def getcsrf(cookie):
 targetuserds = []
 cantmessage = []
 
-runs = 0
 def findtargetaccount():
     global targetuserds, runs, discordhook, cookie, groupid, roleid
     nextcur = ""
@@ -37,11 +36,6 @@ def findtargetaccount():
             for i in userids:
                 targetuserds.append(i["userId"])
             nextcur = users["nextPageCursor"]
-            runs += 1
-            if runs > 10:
-                runs = 0
-                nextcur = ""
-                targetuserds = []
         except:
             runs = 0
             nextcur = ""
