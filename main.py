@@ -88,6 +88,7 @@ def mainloop():
                 print(msgre.text)
                 if msgre.ok:
                   requests.post(discordhook, json={"content": "Sent message to https://www.roblox.com/users/"+str(i)+"/profile"})
+                  cantmessage.append(i)
             else:
                 cantmessage.append(i)
             
