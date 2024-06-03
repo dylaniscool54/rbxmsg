@@ -73,10 +73,12 @@ def mainloop():
               targetuserds.remove(i)
             except:
               pass
-            response = requests.get("https://www.roblox.com/users/"+str(i)+"/profile", cookies={".ROBLOSECURITY": cookie})
-            print(i)
+            
             if i in cantmessage:
                 continue
+            response = requests.get("https://www.roblox.com/users/"+str(i)+"/profile", cookies={".ROBLOSECURITY": cookie})
+            print(i)
+
             if "data-canmessage=true" in response.text:
                 print("Found " + str(i))
                 csrf = getcsrf(cookie)
