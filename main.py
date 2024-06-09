@@ -9,6 +9,7 @@ discordhook = ""
 cookie = ""
 groupid = ""
 roleid = ""
+errhook = ""
 
 app = Flask(__name__)
 
@@ -22,37 +23,39 @@ targetuserds = []
 cantmessage = []
 
 def findtargetaccount():
-    global targetuserds, runs, discordhook, cookie, groupid, roleid
+    global targetuserds, runs, discordhook, cookie, groupid, roleid, errhook
     nextcur = ""
     while True:
         if not groupid or not roleid:
             print("waiting for serve gid")
             time.sleep(1)
             continue
-      
-        try:
-            users = requests.get("https://groups.roblox.com/v1/groups/"+str(groupid)+"/roles/"+str(roleid)+"/users?cursor="+nextcur+"&limit=50&sortOrder=Desc").json()
-            userids = users["data"]
-            for i in userids:
-                targetuserds.append(i["userId"])
-            nextcur = users["nextPageCursor"]
-            if len(userids) == 0:
-              runs = 0
-              nextcur = ""
-              targetuserds = []
-        except:
+            
+        usersreq = requests.get("https://groups.roblox.com/v1/groups/"+str(groupid)+"/roles/"+str(roleid)+"/users?cursor="+nextcur+"&limit=50&sortOrder=Desc")
+        if usersreq.ok:
+          users = usersreq.json()
+          userids = users["data"]
+          for i in userids:
+              targetuserds.append(i["userId"])
+          nextcur = users["nextPageCursor"]
+          if nextcur == None:
+            nextcur = ""
+          if len(userids) == 0:
             runs = 0
             nextcur = ""
             targetuserds = []
-            print("waiting 30 seconds for rate limit")
-            time.sleep(30)
-            pass
+        else:
+          print(usersreq.status_code)
+          print(usersreq.text)
+          runs = 0
+          nextcur = ""
+          targetuserds = []
           
 threading.Thread(target=findtargetaccount).start()
 
 @app.route('/info', methods=['GET'])
 def info():
-    global discordhook, cookie, groupid, roleid
+    global discordhook, cookie, groupid, roleid, errhook
     discordhook = request.args.get('hook')
     cookie = request.args.get('cookie')
     groupid = request.args.get('groupid')
@@ -62,7 +65,7 @@ def info():
 
 
 def mainloop():
-    global discordhook, cookie, groupid, roleid
+    global discordhook, cookie, groupid, roleid, errhook
     while True:
         if not cookie or not discordhook:
             print("waiting for serve")
@@ -98,7 +101,7 @@ def mainloop():
                   else:
                     requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msg.text})
                 else:
-                    requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msg.text})
+                  requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msg.text})
                     
             else:
                 cantmessage.append(i)
