@@ -44,6 +44,8 @@ def findtargetaccount():
             runs = 0
             nextcur = ""
             targetuserds = []
+            print("waiting 30 seconds for rate limit")
+            time.sleep(30)
             pass
           
 threading.Thread(target=findtargetaccount).start()
