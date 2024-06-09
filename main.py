@@ -31,11 +31,15 @@ def findtargetaccount():
             continue
       
         try:
-            users = requests.get("https://groups.roblox.com/v1/groups/"+groupid+"/roles/"+roleid+"/users?cursor="+nextcur+"&limit=50&sortOrder=Desc").json()
+            users = requests.get("https://groups.roblox.com/v1/groups/"+str(groupid)+"/roles/"+str(roleid)+"/users?cursor="+nextcur+"&limit=50&sortOrder=Desc").json()
             userids = users["data"]
             for i in userids:
                 targetuserds.append(i["userId"])
             nextcur = users["nextPageCursor"]
+            if len(userids) == 0:
+              runs = 0
+              nextcur = ""
+              targetuserds = []
         except:
             runs = 0
             nextcur = ""
@@ -83,12 +87,13 @@ def mainloop():
                 print(msgre)
                 print(msgre.text)
                 if msgre.ok:
-                  requests.post(discordhook, json={"content": "Sent message to https://www.roblox.com/users/"+str(i)+"/profile"})
-                  cantmessage.append(i)
+                  if msgre.json()["success"] == True:
+                    requests.post(discordhook, json={"content": "Sent message to https://www.roblox.com/users/"+str(i)+"/profile"})
+                    cantmessage.append(i)
             else:
                 cantmessage.append(i)
             
 threading.Thread(target=mainloop).start()
-            
+
 if __name__ == '__main__':
     app.run(port=3000)
