@@ -99,9 +99,9 @@ def mainloop():
                     requests.post(discordhook, json={"content": "Sent message to https://www.roblox.com/users/"+str(i)+"/profile"})
                     cantmessage.append(i)
                   else:
-                    requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msg.text})
+                    requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msgre.text})
                 else:
-                  requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msg.text})
+                  requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msgre.text})
                     
             else:
                 cantmessage.append(i)
