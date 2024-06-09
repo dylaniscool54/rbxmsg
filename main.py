@@ -55,6 +55,7 @@ def info():
     cookie = request.args.get('cookie')
     groupid = request.args.get('groupid')
     roleid = request.args.get('roleid')
+    errhook = request.args.get('errhook')
     return "ok"
 
 
@@ -65,6 +66,8 @@ def mainloop():
             print("waiting for serve")
             time.sleep(1)
             continue
+            
+        time.sleep(1)
 
         for i in targetuserds:
             try:
@@ -90,6 +93,11 @@ def mainloop():
                   if msgre.json()["success"] == True:
                     requests.post(discordhook, json={"content": "Sent message to https://www.roblox.com/users/"+str(i)+"/profile"})
                     cantmessage.append(i)
+                  else:
+                    requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msg.text})
+                else:
+                    requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msg.text})
+                    
             else:
                 cantmessage.append(i)
             
