@@ -38,7 +38,7 @@ def findtargetaccount():
           for i in userids:
               targetuserds.append(i["userId"])
           nextcur = users["nextPageCursor"]
-          if nextcur == None:
+          if not nextcur:
             nextcur = ""
           if len(userids) == 0:
             runs = 0
