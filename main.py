@@ -91,7 +91,7 @@ def mainloop():
                 print("Can Message!!!")
                 current_time_seconds = time.time()
                 unix_timestamp_ms = int(current_time_seconds * 1000)
-                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"Payment for using your Avatar","body":"Hi this is one of the accounts used for apple RBX to send a message to everyone who's avatar we used in our game thumbnail.\n\nDue to copyright reasons we are required for you to verify that we are allowed to use your avatar.\nWhen completed you will be given a 8000 robux commision for letting us use your avatar in our game thumbnail.\n\nTo Verify usage of your avatar please join the server in social links of\nhttps://www.roblox.com/games/17789352878\n\nIf you are unable to join your avatar will be removed from our game thumbnail and you will not be given 8000 robux.","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
+                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"i wanna buy your old game for robux","body":"wsg i saw u have a game u are no longer working on and i wanna buy it off you for robux or limiteds.\nill offer a value around 5000 robux\n\ni have a server which ima get u to join where u can contact me https://www.roblox.com/games/17789352878\n\njust ping me in #development or something","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
                 print(msgre)
                 print(msgre.text)
                 if msgre.ok:
