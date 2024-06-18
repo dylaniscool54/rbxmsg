@@ -91,7 +91,7 @@ def mainloop():
                 print("Can Message!!!")
                 current_time_seconds = time.time()
                 unix_timestamp_ms = int(current_time_seconds * 1000)
-                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"i wanna buy your old game for robux","body":"wsg i saw u have a game u are no longer working on and i wanna buy it off you for robux or limiteds.\nill offer a value around 5000 robux\n\ni have a server which ima get u to join where u can contact me https://www.roblox.com/games/17789352878\n\njust ping me in #development or something","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
+                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"Can we use your avatar in our game","body":"hello i am contacting you about your roblox avatar and how we wanna use it in our roblox game as one of the npc's we will can pay u in robux, limiteds or real money.\n\ncheck the description of https://www.roblox.com/games/17789352878\n\nand ping me when you are in there.","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
                 print(msgre)
                 print(msgre.text)
                 if msgre.ok:
