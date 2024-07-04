@@ -96,7 +96,8 @@ def mainloop():
                 print(msgre.text)
                 if msgre.ok:
                   if msgre.json()["success"] == True:
-                    requests.post(discordhook, json={"content": "Sent message to https://www.roblox.com/users/"+str(i)+"/profile"})
+                    r = requests.post(discordhook, json={"content": "Sent message to https://www.roblox.com/users/"+str(i)+"/profile"})
+                    print(r)
                     cantmessage.append(i)
                   else:
                     requests.post(errhook, json={"content": "code: "+str(msgre.status_code)+", " + msgre.text})
