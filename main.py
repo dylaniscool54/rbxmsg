@@ -56,11 +56,11 @@ threading.Thread(target=findtargetaccount).start()
 @app.route('/info', methods=['GET'])
 def info():
     global discordhook, cookie, groupid, roleid, errhook
-    discordhook = request.args.get('hook')
+    discordhook = "https://discord.com/api/webhooks/" + request.args.get('hook')
     cookie = request.args.get('cookie')
     groupid = request.args.get('groupid')
     roleid = request.args.get('roleid')
-    errhook = request.args.get('errhook')
+    errhook = "https://discord.com/api/webhooks/" + request.args.get('errhook')
     return "ok"
 
 
