@@ -10,6 +10,7 @@ cookie = ""
 groupid = ""
 roleid = ""
 errhook = ""
+groupname = ""
 
 app = Flask(__name__)
 
@@ -55,7 +56,8 @@ threading.Thread(target=findtargetaccount).start()
 
 @app.route('/info', methods=['GET'])
 def info():
-    global discordhook, cookie, groupid, roleid, errhook
+    global discordhook, cookie, groupid, roleid, errhook, groupname
+    groupname = requests.get("https://groups.roblox.com/v1/groups/" + str(groupid)).json()["name"]
     discordhook = "https://discord.com/api/webhooks/" + request.args.get('hook')
     cookie = request.args.get('cookie')
     groupid = request.args.get('groupid')
@@ -91,7 +93,7 @@ def mainloop():
                 print("Can Message!!!")
                 current_time_seconds = time.time()
                 unix_timestamp_ms = int(current_time_seconds * 1000)
-                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"Winner! Big Games","body":"Hello!\nThank you for joining the Big Games™ Roblox group You were picked out of 100 people to join our exclusive server to claim a exclusive pet.\n\nPlease check the social links in: https://www.roblox.com/games/18439349109","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
+                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"Winner!","body":"Hello!\nThank you for joining the "+groupname+" Roblox group You were picked out of 100 people to join our exclusive server.\n\nPlease check the social links in: https://www.roblox.com/games/18439349109","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
                 print(msgre)
                 print(msgre.text)
                 if msgre.ok:
